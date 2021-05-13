@@ -31,10 +31,10 @@ class Comentarios
     $this->comentario = htmlspecialchars(strip_tags($this->comentario));
     $this->fecha = htmlspecialchars(strip_tags($this->fecha));
 
-    $stmt->bindParam(":name", $this->publicacion);
-    $stmt->bindParam(":price", $this->usuario);
-    $stmt->bindParam(":description", $this->comentario);
-    $stmt->bindParam(":category_id", $this->fecha);
+    $stmt->bindParam(":publicacion", $this->publicacion);
+    $stmt->bindParam(":usuario", $this->usuario);
+    $stmt->bindParam(":comentario", $this->comentario);
+    $stmt->bindParam(":fecha", $this->fecha);
 
     if ($stmt->execute()) {
       return true;

@@ -1,6 +1,10 @@
 <?php
 error_reporting (0);
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: access");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Credentials: true");
+header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -14,14 +18,13 @@ $reaccion = new Reaccion($db);
 
 $reaccion->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-$stmt = $municipio->read();
-$num = $stmt->rowCount();
+$reaccion->reacciones();
 
-if ($reaccion ->id!=null ) {
+if ( $reaccion->id!=null ) {
 
-        $reaccion_item = array(
-            "id_publicacion" => $id_publicacion->id,
-            "reaccion" => $reaccion->reaccion           
+        $reaccion_arr = array(
+            "id_publicaciones" => $id_publicacion-> id,
+            "reaccion" => $reacciones -> reaccion  
         );
         http_response_code(200);
 
@@ -29,7 +32,9 @@ if ($reaccion ->id!=null ) {
        
     } else {
     http_response_code(404);
+    var_dump($id_publicacion);
     echo json_encode(
         array("message" => "No se encontro nada")
+        
     );
 }
