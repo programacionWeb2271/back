@@ -17,11 +17,14 @@ class Reaccion
     }
     function reacciones()
     {
-       $query = "CALL consultar_reaccciones_por_ID_PUBLIACION (".$id_publicacion.")";
+       $query = "CALL consultar_reaccciones_por_ID_PUBLIACION";
         
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
         $stmt->execute();
 
-        return $stmt;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this -> id = $row['id_publicacion'];
+        $this->reaccion = $row['reaccion'];
     }
 }
