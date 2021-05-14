@@ -23,8 +23,8 @@ $reaccion->reacciones();
 if ( $reaccion->id!=null ) {
 
         $reaccion_arr = array(
-            "id_publicaciones" => $id_publicacion-> id,
-            "reaccion" => $reacciones -> reaccion  
+            "id_publicaciones" => $reaccion-> id,
+            "reaccion" => $reaccion -> reaccion  
         );
         http_response_code(200);
 

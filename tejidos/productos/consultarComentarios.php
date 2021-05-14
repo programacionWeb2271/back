@@ -11,32 +11,22 @@ $database = new Database();
 $db = $database->getConnection();
 
 $comentario = new Comentarios($db);
+$comentario->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-$stmt = $publicacion->read();
-$num = $stmt->rowCount();
+$comentario->read();
 
-if ($num > 0) {
+if ($comentario->id != null) {
 
-    $comentario_arr = array();
-    $comentario_arr["data"] = array();
+    $publicaciones_arr = array(
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-        extract($row);
-
-        $publicacion_item = array(
-            "idPublicacion"=> $id_comentarios,
-            "id_usuario"=> $id_usuario,
-            "comentario"=> $comentario,
-            "fecha"=> $Fecha
-        );
-
-        array_push($comentario_arr["data"], $comentario_item);
-    }
+        "id_publicaciones" => $comentario->id,
+        "id_usuario" => $comentario->idUser,
+        "comentario" => $comentario->comentario,
+        "Fecha" => $comentario->fecha
+    );
 
     http_response_code(200);
-
-    echo json_encode($comentario_arr);
+    echo json_encode($publicaciones_arr);
 } else {
     http_response_code(401);
     echo json_encode(

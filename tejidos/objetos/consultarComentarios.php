@@ -19,11 +19,16 @@ class Comentarios
     }
     function read()
     {
-       $query = "CALL consultar_comentarios_por_ID_PUBLICACION";
+       $query = "CALL consultar_comentarios_por_ID_PUBLICACION (?)";
         
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
+       $stmt = $this->conn->prepare($query);
+       $stmt->bindParam(1, $this->id);
+       $stmt->execute();
 
-        return $stmt;
+       $row = $stmt->fetch(PDO::FETCH_ASSOC);
+       $this->id = $row['id_publicaciones'];
+       $this->idUser = $row['id_usuario'];
+       $this->comentario = $row['comentario'];
+       $this->fecha = $row['Fecha'];
     }
 }

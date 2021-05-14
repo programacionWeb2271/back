@@ -8,45 +8,41 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../config/database.php';
 include_once '../objetos/crearComentario.php';
-  
+
 $database = new Database();
 $db = $database->getConnection();
-  
+
 $comentario = new Comentarios($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-if(
+if (
     !empty($data->publicacion) &&
     !empty($data->usuario) &&
     !empty($data->comentario) &&
     !empty($data->fecha)
-){
-  
+) {
+
     $comentario->publicacion = $data->publicacion;
     $comentario->usuario = $data->usuario;
     $comentario->comentario = $data->comentario;
     $comentario->fecha = $data->fecha;
     $comentario->created = date('Y-m-d H:i:s');
-  
-    if($comentario->create()){
-  
+
+    if ($comentario->Comentario()) {
+
         http_response_code(201);
-  
+
         echo json_encode(array("message" => "Se ha creado el comentario."));
-    }
-  
-    else{
-  
+    } else {
+
         http_response_code(503);
-  
+
         echo json_encode(array("message" => "No se pudo crear el comentario."));
     }
-}
-  
-else{
-  
+} else {
+
     http_response_code(400);
-  
+
     echo json_encode(array("message" => "No se puede crear el comenatario, faltan datos."));
 }

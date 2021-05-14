@@ -11,35 +11,23 @@ $database = new Database();
 $db = $database->getConnection();
 
 $usuario = new Usuarios($db);
+$usuario->id = isset($_GET['id']) ? $_GET['id'] : die();
+$usuario->read();
 
-$stmt = $usuario->read();
-$num = $stmt->rowCount();
+if ($usuario ->id!=null) {
 
-if ($num > 0) {
-
-    $usuario_arr = array();
-    $usuario_arr["data"] = array();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-        extract($row);
-
-        $usuario_item = array(
-            "nombre"=> $nombre_usuario,
-            "apellido"=> $apellido,
-            "genero"=> $sexo,
-            "fecha_nacimiento"=> $Fecha_nacimiento,
-            "tipo"=> $tipo,
-            "municipio"=> $id_municipios,
-            "foto"=>$foto_perfil
-        );
-
-        array_push($usuario_arr["data"], $usuario_item);
-    }
-
+    $reaccion_arr = array(
+        "nombre_usuario" => $usuario-> nombre,
+        "apellido" => $usuario -> apellido,
+        "sexo" => $usuario -> genero,
+        "Fecha_nacimiento" =>$usuario -> fecha,
+        "id_municipios" =>$usuario ->municipio,
+        "tipo" =>$usuario -> tipo,
+        "foto_perfil" =>$usuario -> foto
+    );
     http_response_code(200);
 
-    echo json_encode($usuario_arr);
+    echo json_encode($reaccion_arr);
 } else {
     http_response_code(401);
     echo json_encode(

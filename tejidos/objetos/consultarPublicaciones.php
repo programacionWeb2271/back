@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-class Publicaciones{
+class Publicaciones
+{
 
     //conectarse a la base de datos y seleecionar la tabla
     private $conn;
@@ -9,22 +10,30 @@ class Publicaciones{
     //propiedades del obejeto
     public $id_publicaciones;
     public $id_usuario;
+    public $nombre_usuario;
     public $texto;
     public $imagen;
     public $Fecha;
-    public $tipo;
-    public $estado;
 
-    public function __construct($db){
+
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
     function read()
     {
-       $query ="SELECT * FROM " . $this->table_name ."";
+        $query = "CALL Consultar_publiacion_por_ID_USUARIO (?)";
 
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
         $stmt->execute();
 
-        return $stmt;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->id = $row['id_publicaciones'];
+        $this->idUser = $row['id_usuario'];
+        $this->nombre = $row['nombre_usuario'];
+        $this->texto = $row['texto'];
+        $this->imagen = $row['imagen'];
+        $this->fecha = $row['Fecha'];
     }
 }

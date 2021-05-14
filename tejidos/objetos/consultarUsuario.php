@@ -22,11 +22,19 @@ class Usuarios
     }
     function read()
     {
-       $query = "CALL consulta_usuario_por_ID_USUARIO (36)";
+       $query = "CALL consulta_usuario_por_ID_USUARIO (?)";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
+       $stmt = $this->conn->prepare($query);
+       $stmt->bindParam(1, $this->id);
+       $stmt->execute();
 
-        return $stmt;
+       $row = $stmt->fetch(PDO::FETCH_ASSOC);
+       $this->nombre = $row['nombre_usuario'];
+       $this->apellido = $row['apellido'];
+       $this->genero = $row['sexo'];
+       $this->fecha = $row['Fecha_nacimiento'];
+       $this->municipio =$row['id_municipios'];
+       $this->tipo = $row['tipo'];
+       $this->foto =$row['foto_perfil'];
     }
 }

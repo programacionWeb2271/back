@@ -2,6 +2,11 @@
 //error_reporting (0);
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: access");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Credentials: true");
+header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once '../config/database.php';
@@ -11,32 +16,23 @@ $database = new Database();
 $db = $database->getConnection();
 
 $publicacion = new Publicaciones($db);
+$publicacion->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-$stmt = $publicacion->read();
-$num = $stmt->rowCount();
+$publicacion->read();
 
-if ($num > 0) {
+if ($publicacion->id != null) {
 
-    $publicaciones_arr = array();
-    $publicaciones_arr["data"] = array();
+    $publicaciones_arr = array(
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-        extract($row);
-
-        $publicacion_item = array(
-            "publicacion"=> $id_publicaciones,
-            "id_usuario"=> $id_usuario,
-            "texto"=> $texto,
-            "imagen"=> $imagen,
-            "fecha"=> $Fecha
-        );
-
-        array_push($publicaciones_arr["data"], $publicacion_item);
-    }
+        "id_publicaciones" => $publicacion->id,
+        "id_usuario" => $publicacion->idUser,
+      //"nombre_usuario" => $publicacion->nombre,
+        "texto" => $publicacion->texto,
+        "imagen" => $publicacion->imagen,
+        "Fecha" => $publicacion->fecha
+    );
 
     http_response_code(200);
-
     echo json_encode($publicaciones_arr);
 } else {
     http_response_code(401);

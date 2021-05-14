@@ -8,13 +8,10 @@ class Comentarios
   private $table_name = "comentarios";
 
   //propiedades del obejeto
-  public $nombre_usuario;
-  public $apellido;
-  public $sexo;
-  public $Fecha_nacimiento;
-  public $tipo;
-  public $id_municipios;
-  public $foto_perfil;
+  public $publicacion;
+  public $usuario;
+  public $comentario;
+  public $fecha;
 
   public function __construct($db)
   {
