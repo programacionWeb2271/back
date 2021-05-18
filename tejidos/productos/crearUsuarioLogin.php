@@ -7,7 +7,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../config/database.php';
-include_once '../objetos/crearUsuario.php';
+include_once '../objetos/crearUsuarioLogin.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -19,36 +19,43 @@ $data = json_decode(file_get_contents("php://input"));
 if (
     !empty($data->usuario) &&
     !empty($data->apellido) &&
-    !empty($data->genero) &&
-    !empty($data->nacimineto) &&
+    !empty($data->sexo) &&
     !empty($data->municipio) &&
     !empty($data->tipo) &&
-    !empty($data->estado) &&    
+    !empty($data->estado) &&
     !empty($data->foto) &&
     !empty($data->correo) &&
     !empty($data->pass) &&
-    !empty($data->estado1)
-    
-){
+    !empty($data->login)
 
-    $comentario->publicacion = $data->publicacion;
-    $comentario->usuario = $data->usuario;
-    $comentario->comentario = $data->comentario;
+) {
 
-    if ($user->usuarioLog()) {
+    $user->usuario = $data->usuario;
+    $user->apellido = $data->apellido;
+    $user->sexo = $data->sexo;
+    $user->municipio = $data->municipio;
+    $user->tipo = $data->tipo;
+    $user->estado = $data->estado;
+    $user->foto = $data->foto;
+    $user->correo = $data->correo;
+    $user->pass = $data->pass;
+    $user->login = $data->login;
+
+
+    if ($user->usuarioLogs()) {
 
         http_response_code(201);
 
-        echo json_encode(array("message" => "Se ha creado el comentario."));
+        echo json_encode(array("message" => "Se ha creado el usuario."));
     } else {
 
         http_response_code(503);
 
-        echo json_encode(array("message" => "No se pudo crear el comentario."));
+        echo json_encode(array("message" => "No se pudo crear el usuario."));
     }
 } else {
 
     http_response_code(400);
 
-    echo json_encode(array("message" => "No se puede crear el comenatario, faltan datos."));
+    echo json_encode(array("message" => "No se puede crear el usuario, faltan datos."));
 }
