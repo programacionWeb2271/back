@@ -16,7 +16,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 $publicacion = new Publicaciones($db);
-$publicacion->id = isset($_GET['id']) ? $_GET['id'] : die();
+$publicacion->id = isset($_POST['id']) ? $_POST['id'] : die();
 
 $publicacion->read();
 

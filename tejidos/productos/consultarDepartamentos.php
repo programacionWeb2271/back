@@ -2,6 +2,11 @@
 error_reporting (0);
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: access");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Credentials: true");
+header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once '../config/database.php';
@@ -12,32 +17,25 @@ $db = $database->getConnection();
 
 $departamento = new Departamentos($db);
 
-$stmt = $departamento->read();
-$num = $stmt->rowCount();
 
-if ($num > 0) {
+$departamento->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    $departamento_arr = array();
-    $departamento_arr["data"] = array();
+$departamento->read();
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+if ( $departamento->id!=null ) {
 
-        extract($row);
-
-        $departamento_item = array(
-            "id_departamentos" => $id_departamento,
-            "nombre_mun" => $nombre_dep            
+        $departamento_arr = array(
+            "id_publicaciones" => $departamento-> id,
+            "reaccion" => $departamento -> nombre  
         );
+        http_response_code(200);
 
-        array_push($departamento_arr["data"], $departamento_item);
-    }
-
-    http_response_code(200);
-
-    echo json_encode($departamento_arr);
-} else {
+        echo json_encode($departamento_arr);
+       
+    } else {
     http_response_code(404);
     echo json_encode(
         array("message" => "No se encontro nada")
+        
     );
 }

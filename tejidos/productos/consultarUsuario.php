@@ -11,7 +11,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 $usuario = new Usuarios($db);
-$usuario->id = isset($_GET['id']) ? $_GET['id'] : die();
+$usuario->id = isset($_POST['id']) ? $_POST['id'] : die();
 $usuario->read();
 
 if ($usuario ->id!=null) {
@@ -26,7 +26,7 @@ if ($usuario ->id!=null) {
         "foto_perfil" =>$usuario -> foto
     );
     http_response_code(200);
-
+    var_dump($reaccion_arr);
     echo json_encode($reaccion_arr);
 } else {
     http_response_code(401);

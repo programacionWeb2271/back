@@ -16,7 +16,7 @@ $db = $database->getConnection();
 
 $reaccion = new Reaccion($db);
 
-$reaccion->id = isset($_GET['id']) ? $_GET['id'] : die();
+$reaccion->id = isset($_POST['id']) ? $_POST['id'] : die();
 
 $reaccion->reacciones();
 
@@ -32,7 +32,6 @@ if ( $reaccion->id!=null ) {
        
     } else {
     http_response_code(404);
-    var_dump($id_publicacion);
     echo json_encode(
         array("message" => "No se encontro nada")
         

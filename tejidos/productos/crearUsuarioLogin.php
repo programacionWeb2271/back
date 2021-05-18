@@ -7,27 +7,35 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../config/database.php';
-include_once '../objetos/crearComentario.php';
+include_once '../objetos/crearUsuario.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$comentario = new Comentario($db);
+$user = new usuarioLog($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
 if (
-    !empty($data->publicacion) &&
     !empty($data->usuario) &&
-    !empty($data->comentario) /*&&
-    !empty($data->fecha)*/
-) {
+    !empty($data->apellido) &&
+    !empty($data->genero) &&
+    !empty($data->nacimineto) &&
+    !empty($data->municipio) &&
+    !empty($data->tipo) &&
+    !empty($data->estado) &&    
+    !empty($data->foto) &&
+    !empty($data->correo) &&
+    !empty($data->pass) &&
+    !empty($data->estado1)
+    
+){
 
     $comentario->publicacion = $data->publicacion;
     $comentario->usuario = $data->usuario;
     $comentario->comentario = $data->comentario;
 
-    if ($comentario->Comentario()) {
+    if ($user->usuarioLog()) {
 
         http_response_code(201);
 

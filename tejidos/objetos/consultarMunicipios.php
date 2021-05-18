@@ -18,11 +18,15 @@ class Municipios
     }
     function read()
     {
-       $query = "CALL Consultar_todos_tabla_municipios";
-        
+        $query = "CALL consulta_municipios_por_Id_municipio (?)";
+
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
         $stmt->execute();
 
-        return $stmt;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->id = $row['id_municipios'];
+        $this->idDep = $row['id_departamento'];
+        $this->nombre = $row['nombre_mun'];
     }
 }
