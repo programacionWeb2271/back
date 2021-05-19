@@ -27,19 +27,6 @@ class usuarioLog
     $query = "CALL Crear_usuario_y_login ('$usuario', '$apellido', '$sexo', '$municipio', '$tipo', '$estado', '$foto', '$correo', '$pass', '$login')";
     $stmt = $this->conn->prepare($query);
 
-    /*
-    $stmt->bindParam(":usuario", $this->usuario);
-    $stmt->bindParam(":apellido", $this->apellido);
-    $stmt->bindParam(":genero", $this->genero);
-    $stmt->bindParam(":nacimineto", $this->nacimiento);
-    $stmt->bindParam(":municipio", $this->municipio);
-    $stmt->bindParam(":tipo", $this->tipo);
-    $stmt->bindParam(":estado", $this->estado);
-    $stmt->bindParam(":foto", $this->foto);
-    $stmt->bindParam(":correo", $this->correo);
-    $stmt->bindParam(":pass", $this->pass);
-    $stmt->bindParam(":estado1", $this->estado1);
-*/
     if ($stmt->execute()) {
       return true;
     }
