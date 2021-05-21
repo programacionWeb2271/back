@@ -16,7 +16,7 @@ $db = $database->getConnection();
 
 $reaccion = new Reaccion($db);
 
-$reaccion->id = isset($_POST['id']) ? $_POST['id'] : die();
+$reaccion->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 $reaccion->reacciones();
 

@@ -25,8 +25,8 @@ $departamento->read();
 if ( $departamento->id!=null ) {
 
         $departamento_arr = array(
-            "id_publicaciones" => $departamento-> id,
-            "reaccion" => $departamento -> nombre  
+            "id_departamento" => $departamento-> id,
+            "nombre_dep" => $departamento -> nombre  
         );
         http_response_code(200);
 

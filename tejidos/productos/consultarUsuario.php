@@ -12,7 +12,7 @@ $db = $database->getConnection();
 
 $usuario = new Usuarios($db);
 $usuario->id = isset($_POST['id']) ? $_POST['id'] : die();
-$usuario->read();
+$usuario->user();
 
 if ($usuario ->id!=null) {
 
@@ -20,13 +20,11 @@ if ($usuario ->id!=null) {
         "nombre_usuario" => $usuario-> nombre,
         "apellido" => $usuario -> apellido,
         "sexo" => $usuario -> genero,
-        "Fecha_nacimiento" =>$usuario -> fecha,
         "id_municipios" =>$usuario ->municipio,
         "tipo" =>$usuario -> tipo,
         "foto_perfil" =>$usuario -> foto
     );
     http_response_code(200);
-    var_dump($reaccion_arr);
     echo json_encode($reaccion_arr);
 } else {
     http_response_code(401);

@@ -17,7 +17,7 @@ class Departamentos
     }
     function read()
     {
-        $query = "CALL Consultar_todos_tabla_departamentos (?)";
+        $query = "CALL consulta_departamento_por_ID_DEPARTAMENTO (?)";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
