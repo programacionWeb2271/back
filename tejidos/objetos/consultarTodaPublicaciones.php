@@ -20,7 +20,7 @@ class Publicaciones{
     }
     function read()
     {
-       $query ="SELECT * FROM " . $this->table_name ."";
+       $query ="SELECT * FROM publicaciones ORDER BY id_publicaciones DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
